@@ -2,12 +2,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // initialiser l'application Express
 const app = express();
 
 // utiliser le module bodyParser pour analyser les données des requêtes
 app.use(bodyParser.json());
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // connecter à la base de données MongoDB
@@ -18,12 +20,33 @@ mongoose.connect('mongodb+srv://ndongodahs:a12345678B@cluster0.uupmbji.mongodb.n
 
 // définir le modèle de tâches
 const Task = mongoose.model('Task', {
-  name: String,
-  description: String,
+  name: {
+   type: String,
+   required:[true,"le title est required"]
+  },
+  description: {
+    type: String,
+    required:[true,"la description est required"]
+   },
   dueDate: {
     type:Date,
  },
   done: Boolean
+});
+
+const User=mongoose.model('User', {
+  name: {
+    type:String,
+    required:[true,"username est required"]
+  },
+  email: {
+    type:String,
+    required:[true,"Email est required"]
+  },
+  password:{
+    type:String,
+    required: [true,"Password est required"]
+  }
 });
 
 // définir les routes pour l'API de todo list
