@@ -49,6 +49,35 @@ const User=mongoose.model('User', {
   }
 });
 
+//regist
+app.get('/user', async (req, res) => {
+  const user = await User.find();
+  res.json(user);
+});
+
+app.post('/user', async (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password:req.body.password,
+  });
+
+  await user.save();
+
+  res.json(user);
+});
+app.put('/user/:id', async (req, res) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(user);
+});
+
+app.delete('/user/:id', async (req, res) => {
+  const user = await Task.findByIdAndDelete(req.params.id);
+  res.json({message:"L'utilisateur est sumprimer"});
+});
+
+
+
 // définir les routes pour l'API de todo list
 app.get('/tasks', async (req, res) => {
   const tasks = await Task.find();
