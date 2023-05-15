@@ -55,6 +55,17 @@ app.get('/user', async (req, res) => {
   res.json(user);
 });
 
+app.post('/user/', async (req, res) => {
+  const user = new User.findOne({email: req.body.email});
+
+ if(!user){
+ return res.json({message:"Aucun compte n'est associé a cet email"})
+ }else if(user.password != req.body.password){
+  return res.json({message:"Mot de passe incorrect"})
+ }
+
+  res.json(user);
+});
 app.post('/user', async (req, res) => {
   const user = new User({
     name: req.body.name,
