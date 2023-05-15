@@ -55,8 +55,8 @@ app.get('/user', async (req, res) => {
   res.json(user);
 });
 
-app.post('/user/', async (req, res) => {
-  const user = new User.findOne({email: req.body.email});
+app.post('/user/login', async (req, res) => {
+  const user =  User.findOne({email: req.body.email});
 
  if(!user){
  return res.json({message:"Aucun compte n'est associé a cet email"})
